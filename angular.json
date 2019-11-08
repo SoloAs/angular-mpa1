@@ -24,9 +24,22 @@
               "src/assets"
             ],
             "styles": [
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/bootstrap-switch.min.css",
+              "src/assets/css/style.css",
+              "src/assets/css/colors/purple.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery-slimscroll/jquery.slimscroll.min.js",
+              "node_modules/jquery-sparkline/jquery.sparkline.min.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/bootstrap-switch.min.js",
+              "src/assets/js/sidebarmenu.js",
+              "src/assets/js/waves.js",
+              "src/assets/js/custom.min.js"
+            ]
           },
           "configurations": {
             "production": {

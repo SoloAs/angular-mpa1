@@ -1,0 +1,44 @@
+<header class="topbar">
+  <nav class="navbar top-navbar navbar-expand-md navbar-light">
+    <!-- ============================================================== -->
+    <!-- Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-header">
+      <a class="navbar-brand" [routerLink]="[ '/' ]">
+        <!-- Logo text -->
+        <span>
+          <!-- Light Logo text -->
+          <img src="../assets/images/macnica_logo_small.png" class="light-logo" alt="homepage" style="height: 43px;" />
+        </span>
+      </a>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Logo -->
+    <!-- ============================================================== -->
+    <div class="navbar-collapse">
+      <ul class="navbar-nav mr-auto mt-md-0">
+        <!-- This is  -->
+        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted waves-effect waves-dark"><i
+              class="mdi mdi-menu"></i></a> </li>
+        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down text-muted waves-effect waves-dark"><i
+              class="ti-menu"></i></a> </li>
+      </ul>
+      <ul class="nav nav-pills m-t-30 justify-content-end m-b-30 col-sm">
+        <li routerLinkActive="active">
+            <a class="waves-effect waves-dark" routerLinkActive="active" routerLink="/config" class="nav-link top-tabs">Config</a>
+        </li>
+        <li routerLinkActive="active"> 
+            <a class="waves-effect waves-dark" routerLinkActive="active" routerLink="/media" class="nav-link top-tabs">Media</a>
+        </li>
+        <li routerLinkActive="active">
+          <a class="waves-effect waves-dark" routerLinkActive="active" routerLink="/remote" class="nav-link top-tabs">Remote</a>
+        </li>
+        <li routerLinkActive="active">
+          <a class="waves-effect waves-dark" routerLinkActive="active" routerLink="/monitor" class="nav-link top-tabs">Monitor</a>
+        </li>
+
+      </ul>
+    </div>
+  </nav>
+</header>
+

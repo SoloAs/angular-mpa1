@@ -1,0 +1,116 @@
+<div class="card">
+  <div class="card-body collapse show col-md-6">
+    <div id="update-buttons" style="position: fixed; right: 50px;" *ngIf="isPatcheable()">
+      <button type="button" class="btn btn-success" (click)=sendPatchRequest()><i class="fa fa-check"></i> Update</button>
+      <button type="button" class="btn btn-danger" (click)=cancelUpdates()><i class="fa fa-times"></i> Cancel</button>
+    </div>
+    <h1 class="card-title">Configuration</h1>
+
+    <form class="form">
+      <div class="form-group form-material m-t-30 row">
+        <label for="device_name" class="col-4 col-form-label text-right">Device Name:</label>
+        <div class="col-3">
+          <input id="device_name" name="device_name" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.device_name" [(ngModel)]='configService.config?.general.device_name' (change)='validate($event)'>
+          <!-- <button type="button" class="btn btn-success" (click)=patch()><i class="fa fa-check"></i> Update</button> -->
+          <!-- <input id="name" class="form-control form-control-line text-center" placeholder="..." type="text" value={{configService.config.general.device_name}}> -->
+        </div>
+      </div>
+      <div class="form-group form-material row">
+        <label for="nmos" class="col-4 col-form-label text-right">NMOS label:</label>
+        <div class="col-3">
+          <input id="nmos" class="form-control form-control-line text-center" value="ST2110" type="text" disabled>
+        </div>
+      </div>
+      <div class="form-group form-material row">
+        <label for="mode" class="col-4 col-form-label text-right">Mode: </label>
+        <div class="col-2">
+
+          <select id="mode" style="display: block" class="form-control text-center" disabled>
+            <option value="Encoder">Encoder</option>
+            <option value="Decoder">Decoder</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <h4 class="card-title">Network Settings</h4>
+    <form class="form">
+      <div class="form-group form-material m-t-30 row">
+        <label for="dhcp" class="col-4 col-form-label text-right">DHCP:</label>
+        <div class="col-md-3 text-center" style="margin-top: 12px">
+          <input checked="" id="dhcp" name="unicast" type="checkbox">
+          <!-- <div class="switch" style="margin-top: 6px">
+                            <label>OFF
+                                <input checked="" id="unicast" name="dhcp" type="checkbox"><span class="lever"></span>ON</label>
+                        </div> -->
+        </div>
+      </div>
+      <div class="form-group form-material row">
+        <label for="ip" class="col-4 col-form-label text-right">IP address:</label>
+        <div class="col-3">
+          <input id="ip" name="ip" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.ip" [(ngModel)]='configService.config?.network.ip' (change)='validate($event)'>
+        </div>
+      </div>
+      <div class="form-group form-material row">
+        <label for="port" class="col-4 col-form-label text-right">Web Application port number:</label>
+        <div class="col-3">
+          <input id="port" name="port" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.port" [(ngModel)]='configService.config?.network.port' (change)='validate($event)'>
+        </div>
+      </div>
+      <div class="form-group form-material row">
+        <label for="dns" class="col-4 col-form-label text-right">DNS Server:</label>
+        <div class="col-3">
+          <input id="dns" class="form-control form-control-line text-center" placeholder="8.8.8.8" type="text">
+        </div>
+      </div>
+      <div class="form-group form-material row">
+        <label for="stream_delivery" class="col-4 col-form-label text-right">Stream Delivery: </label>
+        <div class="col-2">
+
+          <select id="stream_delivery" style="display: block" class="form-control text-center">
+            <option value="Unicast">Unicast</option>
+            <option value="Multicast">Multicast</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <h1 class="card-title">Media Settings</h1>
+    <h2 class="card-title italics">Encoder settings shown</h2>
+    <form class="form">
+      <div class="form-group form-material row">
+        <label for="video_resolution" class="col-4 col-form-label text-right">Force video resolution: </label>
+        <div class="col-2">
+          <select id="video_resolution" style="display: block" class="form-control text-center">
+            <option value="HDMI EDID">HDMI EDID</option>
+            <option value="1080p">1080p</option>
+            <option value="UHD">UHD</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <form class="form">
+      <div class="form-group form-material row">
+        <label for="framerate" class="col-4 col-form-label text-right">Force Framerate: </label>
+        <div class="col-2">
+          <select id="framerate" style="display: block" class="form-control text-center">
+            <option value="HDMI EDID">HDMI EDID</option>
+            <option value="30">30</option>
+            <option value="60">60</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <h4 class="card-title">Audio</h4>
+    <form>
+      <div class="form-group form-material row">
+        <label for="audio_mode" class="col-4 col-form-label text-right">Force Audio Channels: </label>
+        <div class="col-2">
+
+          <select id="audio_mode" style="display: block" class="form-control text-center">
+            <option value="Disabled">Disabled</option>
+            <option value="2-Channel">2-Channel</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

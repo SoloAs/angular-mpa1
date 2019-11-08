@@ -8,6 +8,14 @@ const updatedStyle = { 'background-color': 'yellow' };
 const defaultStyle = { 'background-color': '' };
 const ipRegex = new RegExp("^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$");
 
+let findValue = function (json, key) {
+  for (let element in json) {
+    if (!json[element].hasOwnProperty(key)) continue;
+    else
+      return json[element][key];
+  }
+};
+
 @Component({
   selector: 'app-config',
   templateUrl: './config.component.html',
@@ -91,12 +99,13 @@ export class ConfigComponent implements OnInit {
     }
   }
 
+
+
   sendPatchRequest() {
-    
     let body = {};
     for (let property in this.stylesObj) {
       if (this.stylesObj[property] == updatedStyle) {
-        body[property] = "kek"
+        body[property] = findValue(this.configService.config, property);
       }
     }
     this.configService.patchConfig(body).subscribe(() => {

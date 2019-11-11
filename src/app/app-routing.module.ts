@@ -8,10 +8,12 @@ import { MonitorComponent } from './monitor/monitor.component';
 
 
 const routes: Routes = [
+  { path: '', redirectTo: "/config", pathMatch: 'full' },
   { path: 'config', component: ConfigComponent },
   { path: 'media', component: MediaComponent },
   { path: 'remote', component: RemoteComponent },
-  { path: 'monitor', component: MonitorComponent }
+  { path: 'monitor', component: MonitorComponent },
+  { path: '**', redirectTo: '/config', pathMatch: 'full' }
 ];
 
 @NgModule({

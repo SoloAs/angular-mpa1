@@ -23,6 +23,10 @@ export class ConfigService {
     private backofficeService: BackofficeService
   ) {}
 
+  /**
+   * GET /config
+   * @returns configuration object
+   */
   requestConfig(): Observable<Config> {
     return this.http.get<Config>(this.backofficeService.url + this.backofficeService.version + endpoint)
       .pipe(
@@ -34,10 +38,18 @@ export class ConfigService {
   }
   
 
+  /**
+   * Sets config locally
+   * @param config 
+   */
   setConfig(config: Config) {
     this.config = config;
   }
 
+  /**
+   * PATCH /config
+   * @param body PATCH request body
+   */
   patchConfig(body): Observable<any> {
     return this.http.patch(this.backofficeService.url + this.backofficeService.version + endpoint, body, httpOptions)
       .pipe(
@@ -47,8 +59,4 @@ export class ConfigService {
         })
       )
   }
-  // logConfig() {
-  //   console.log(this.config);
-  // }
-
 }

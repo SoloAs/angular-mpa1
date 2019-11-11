@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
-import { Config } from '../classes/config';
-import { invalid } from '@angular/compiler/src/render3/view/util';
 
 const invalidStyle = { 'background-color': 'red' };
 const updatedStyle = { 'background-color': 'yellow' };
 const defaultStyle = { 'background-color': '' };
-const ipRegex = new RegExp("^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$");
 
+/**
+ * Helper function to find attribute in nested
+ * configuration json
+ * @param json 
+ * @param key 
+ */
 let findValue = function (json, key) {
   for (let element in json) {
     if (!json[element].hasOwnProperty(key)) continue;
@@ -24,7 +27,10 @@ let findValue = function (json, key) {
   
   
 export class ConfigComponent implements OnInit {
-
+  /**
+   * Contains styles of all configuration inputs
+   * Binded with the view
+   */
   stylesObj = {
     device_name: defaultStyle,
     mode: defaultStyle,
@@ -35,17 +41,23 @@ export class ConfigComponent implements OnInit {
     stream_delivery: defaultStyle,
     video_resolution: defaultStyle,
     framerate: defaultStyle,
-    audio_mode: defaultStyle
+    audio_channels: defaultStyle
   }
 
   constructor(public configService: ConfigService) { }
   
   ngOnInit() {
+    // Get and display configuration on page load
     this.configService.requestConfig().subscribe(res => {
       this.configService.setConfig(res);
     })
   }
-
+  
+  /**
+   * Function for validation input values before doing PATCH request. On update highlights
+   * valid updates with yellow, invalid updates with red
+   * @param event object containing information about changed subject (such as id and value)
+   */
   validate(event) {
     switch (event.target.id) {
       case 'device_name': {
@@ -56,7 +68,8 @@ export class ConfigComponent implements OnInit {
         }
         break;
       }
-      case "ip": {
+      case "ip":
+      case "dns": {
         if (/^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$/.test(event.target.value)) {
           this.stylesObj[event.target.id] = updatedStyle;
         } else {
@@ -71,12 +84,19 @@ export class ConfigComponent implements OnInit {
           this.stylesObj[event.target.id] = invalidStyle;
         }
       }
+      default: {
+        this.stylesObj[event.target.id] = updatedStyle;
+      }
         
       
     }
 
   }
 
+  /**
+   * Checks if any of proposed configuration updates are invalid
+   * @returns if updated params are valid
+   */
   isPatcheable(): boolean {
     let result: boolean = false;
     for (let property in this.stylesObj) {
@@ -90,6 +110,9 @@ export class ConfigComponent implements OnInit {
     return result;
   }
 
+  /**
+   * Removes all updates which aren't sent yet and returns old values
+   */
   cancelUpdates() {
     this.configService.requestConfig().subscribe(res => {
       this.configService.setConfig(res);
@@ -100,7 +123,10 @@ export class ConfigComponent implements OnInit {
   }
 
 
-
+  /**
+   * Forms PATCH request body, executes an actual request and 
+   * restores input styles back to default
+   */
   sendPatchRequest() {
     let body = {};
     for (let property in this.stylesObj) {
@@ -111,12 +137,11 @@ export class ConfigComponent implements OnInit {
     this.configService.patchConfig(body).subscribe(() => {
       this.configService.requestConfig().subscribe(res => {
         this.configService.setConfig(res);
+        for (let property in this.stylesObj) {
+          this.stylesObj[property] = defaultStyle;
+        }
       })
     })
-    
-    for (let property in this.stylesObj) {
-      this.stylesObj[property] = defaultStyle;
-    }
   }
 
 }

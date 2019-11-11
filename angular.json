@@ -76,7 +76,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "web-config-tool:build"
+            "browserTarget": "web-config-tool:build",
+            "port": 8082
           },
           "configurations": {
             "production": {

@@ -10,7 +10,7 @@
       <div class="form-group form-material m-t-30 row">
         <label for="device_name" class="col-4 col-form-label text-right">Device Name:</label>
         <div class="col-3">
-          <input id="device_name" name="device_name" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.device_name" [(ngModel)]='configService.config?.general.device_name' (change)='validate($event)'>
+          <input id="device_name" name="device_name" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.device_name" [(ngModel)]="configService.config?.general.device_name" (change)="validate($event)">
           <!-- <button type="button" class="btn btn-success" (click)=patch()><i class="fa fa-check"></i> Update</button> -->
           <!-- <input id="name" class="form-control form-control-line text-center" placeholder="..." type="text" value={{configService.config.general.device_name}}> -->
         </div>
@@ -25,7 +25,7 @@
         <label for="mode" class="col-4 col-form-label text-right">Mode: </label>
         <div class="col-2">
 
-          <select id="mode" style="display: block" class="form-control text-center" disabled>
+          <select id="mode" name="mode" style="display: block" class="form-control text-center" [ngStyle]="stylesObj.mode" [(ngModel)]="configService.config?.general.mode" (change)="validate($event)" disabled>
             <option value="Encoder">Encoder</option>
             <option value="Decoder">Decoder</option>
           </select>
@@ -34,20 +34,30 @@
     </form>
     <h4 class="card-title">Network Settings</h4>
     <form class="form">
-      <div class="form-group form-material m-t-30 row">
+      <!-- <div class="form-group form-material m-t-30 row">
         <label for="dhcp" class="col-4 col-form-label text-right">DHCP:</label>
         <div class="col-md-3 text-center" style="margin-top: 12px">
-          <input checked="" id="dhcp" name="unicast" type="checkbox">
-          <!-- <div class="switch" style="margin-top: 6px">
-                            <label>OFF
-                                <input checked="" id="unicast" name="dhcp" type="checkbox"><span class="lever"></span>ON</label>
-                        </div> -->
+          <input checked="" id="dhcp" name="dhcp" type="checkbox" [ngStyle]="stylesObj.dhcp" [(ngModel)]="configService.config?.network.dhcp" (change)="validate($event)">
+               <div class="switch" style="margin-top: 6px">
+                                  <label>OFF
+                                      <input checked="" id="unicast" name="dhcp" type="checkbox"><span class="lever"></span>ON</label>
+                      
+               </div>
+        </div>
+      </div> -->
+      <div class="form-group form-material row">
+        <label for="mode" class="col-4 col-form-label text-right">DHCP: </label>
+        <div class="col-2">
+          <select id="dhcp" name="dhcp" style="display: block" class="form-control text-center" [ngStyle]="stylesObj.dhcp" [(ngModel)]="configService.config?.network.dhcp" (change)="validate($event)">
+            <option value="true">Enabled</option>
+            <option value="false">Disabled</option>
+          </select>
         </div>
       </div>
       <div class="form-group form-material row">
         <label for="ip" class="col-4 col-form-label text-right">IP address:</label>
         <div class="col-3">
-          <input id="ip" name="ip" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.ip" [(ngModel)]='configService.config?.network.ip' (change)='validate($event)'>
+          <input id="ip" name="ip" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.ip" [(ngModel)]="configService.config?.network.ip" (change)="validate($event)">
         </div>
       </div>
       <div class="form-group form-material row">
@@ -59,14 +69,14 @@
       <div class="form-group form-material row">
         <label for="dns" class="col-4 col-form-label text-right">DNS Server:</label>
         <div class="col-3">
-          <input id="dns" class="form-control form-control-line text-center" placeholder="8.8.8.8" type="text">
+          <input id="dns" name="dns" class="form-control form-control-line text-center" placeholder="..." type="text" [ngStyle]="stylesObj.dns" [(ngModel)]="configService.config?.network.dns" (change)="validate($event)">
         </div>
       </div>
       <div class="form-group form-material row">
         <label for="stream_delivery" class="col-4 col-form-label text-right">Stream Delivery: </label>
         <div class="col-2">
 
-          <select id="stream_delivery" style="display: block" class="form-control text-center">
+          <select id="stream_delivery" name="stream_delivery" style="display: block" class="form-control text-center" [ngStyle]="stylesObj.stream_delivery" [(ngModel)]="configService.config?.network.stream_delivery" (change)="validate($event)">
             <option value="Unicast">Unicast</option>
             <option value="Multicast">Multicast</option>
           </select>
@@ -74,12 +84,13 @@
       </div>
     </form>
     <h1 class="card-title">Media Settings</h1>
-    <h2 class="card-title italics">Encoder settings shown</h2>
+    <h2 class="card-title italics" *ngIf="configService.config?.general.mode == 'Encoder'">Encoder settings shown</h2>
+    <h2 class="card-title italics" *ngIf="configService.config?.general.mode == 'Decoder'">Decoder settings shown</h2>
     <form class="form">
       <div class="form-group form-material row">
         <label for="video_resolution" class="col-4 col-form-label text-right">Force video resolution: </label>
         <div class="col-2">
-          <select id="video_resolution" style="display: block" class="form-control text-center">
+          <select id="video_resolution" name="video_resolution" style="display: block" class="form-control text-center" [ngStyle]="stylesObj.video_resolution" [(ngModel)]="configService.config?.media.video_resolution" (change)="validate($event)">
             <option value="HDMI EDID">HDMI EDID</option>
             <option value="1080p">1080p</option>
             <option value="UHD">UHD</option>
@@ -91,7 +102,7 @@
       <div class="form-group form-material row">
         <label for="framerate" class="col-4 col-form-label text-right">Force Framerate: </label>
         <div class="col-2">
-          <select id="framerate" style="display: block" class="form-control text-center">
+          <select id="framerate" name="framerate" style="display: block" class="form-control text-center" [ngStyle]="stylesObj.framerate" [(ngModel)]="configService.config?.media.framerate" (change)="validate($event)">
             <option value="HDMI EDID">HDMI EDID</option>
             <option value="30">30</option>
             <option value="60">60</option>
@@ -102,10 +113,10 @@
     <h4 class="card-title">Audio</h4>
     <form>
       <div class="form-group form-material row">
-        <label for="audio_mode" class="col-4 col-form-label text-right">Force Audio Channels: </label>
+        <label for="audio_channels" class="col-4 col-form-label text-right">Force Audio Channels: </label>
         <div class="col-2">
 
-          <select id="audio_mode" style="display: block" class="form-control text-center">
+          <select id="audio_channels" name="audio_channels" style="display: block" class="form-control text-center" [ngStyle]="stylesObj.audio_channels" [(ngModel)]="configService.config?.media.audio_channels" (change)="validate($event)">
             <option value="Disabled">Disabled</option>
             <option value="2-Channel">2-Channel</option>
           </select>
